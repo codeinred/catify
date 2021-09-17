@@ -1,4 +1,5 @@
 #pragma once
+#include <array>
 #include <cstddef>
 #include <string_view>
 
@@ -20,4 +21,9 @@ constexpr auto sanitize_ending(std::string_view line, auto const& endings)
     }
     return line;
 }
+
+
+constexpr std::array emoji_endings = {"🐈"sv, "😌"sv, "💅"sv, "💕"sv, "💖"sv};
+constexpr std::array endings_to_sanitize = {
+    " "sv, "🐈"sv, "😌"sv, "💅"sv, "💕"sv, "💖"sv};
 } // namespace catify
