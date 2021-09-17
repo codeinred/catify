@@ -14,6 +14,7 @@ int catify(fs::path const& p) {
     std::string_view ending2 = emoji_endings.at(e2);
     std::string_view sv = contents;
 
+    cfile file(p, "w");
     for (size_t start = 0; start < sv.size();) {
         size_t end = sv.find('\n', start);
         auto line = sv.substr(start, end - start);
@@ -23,7 +24,6 @@ int catify(fs::path const& p) {
         }
         line = sanitize_ending(line, endings_to_sanitize);
 
-        cfile file(p, "w");
         file.fwrite(sv.substr(0, start));
         file.fwrite(line);
         file.fwrite(" ");
@@ -32,8 +32,12 @@ int catify(fs::path const& p) {
         file.fwrite(sv.substr(end));
         return 0;
     }
+    // If it can't find one, it just adds the emojis to the beginning
+    // This is used so git commit with no message still works
+    file.fwrite(ending1);
+    file.fwrite(ending2);
+    file.fwrite(contents);
 
-    fmt::print("Could not find suitable point in file to put the cat.\n");
-    return 1;
+    return 0;
 }
 } // namespace catify
