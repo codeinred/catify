@@ -26,5 +26,4 @@ constexpr auto sanitize_emoji_ending(std::string_view line)
     -> std::string_view {
     return sanitize_ending(line, catify::endings_to_sanitize);
 }
-
 } // namespace catify
