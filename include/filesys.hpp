@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <string>
 #include <string_view>
+#include <utility>
 
 namespace catify {
 namespace fs = std::filesystem;
@@ -29,9 +30,22 @@ class cfile {
       : fileptr(fopen(p.c_str(), mode)) {
         check(p.c_str(), mode);
     }
+    // Deleted to prevent accidental copies resulting in double-frees
+    cfile(cfile const&) = delete;
+    cfile(cfile&& cf) noexcept
+      : fileptr(std::exchange(cf.fileptr, nullptr)) {}
+
+    // This allows you to avoid checking if the file is the same as itself
+    // Self-assignment can only be done by doing `f = std::move(f)`, which
+    // will create a new cfile, resulting in f.fileptr being made null. Then,
+    // when the assignment occurs, tihs null value will be replaced with the
+    // original value.
+    cfile& operator=(cfile f) { std::swap(fileptr, f.fileptr); }
 
     operator FILE*() const { return fileptr; }
-    ~cfile() {
+
+    // Closes the fileptr, no questions asked.
+    ~cfile() noexcept {
         if (fileptr) {
             fclose(fileptr);
         }
