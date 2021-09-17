@@ -35,7 +35,6 @@ install(
 
 if(PROJECT_IS_TOP_LEVEL)
     find_or_fetch(fmt "https://github.com/fmtlib/fmt.git" master)
-    find_or_fetch(noam "https://github.com/codeinred/noam.git" main)
 
     add_source_dir(src ${libname} fmt)
 endif()
