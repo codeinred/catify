@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.14)
 ## Section 1: Declare project ##
 ################################
 set(project_name catify)
-set(libname "${project_name}")
+set(libname "lib${project_name}")
 project(${project_name} CXX)
 
 include("${CMAKE_CURRENT_SOURCE_DIR}/helper.cmake")
@@ -35,6 +35,7 @@ install(
 
 if(PROJECT_IS_TOP_LEVEL)
     find_or_fetch(fmt "https://github.com/fmtlib/fmt.git" master)
+    find_or_fetch(noam "https://github.com/codeinred/noam.git" main)
 
     add_source_dir(src ${libname} fmt)
 endif()
