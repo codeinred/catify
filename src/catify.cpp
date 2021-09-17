@@ -1,8 +1,10 @@
+#include <array>
 #include <exception>
 #include <filesystem>
 #include <fmt/core.h>
 #include <fstream>
 #include <vector>
+#include <random>
 
 namespace fs = std::filesystem;
 
@@ -15,6 +17,18 @@ std::string read_all(fs::path const& p, std::fstream& file) {
 int catify(fs::path const& p) {
     std::fstream file(p);
     std::string contents = read_all(p, file);
+    using std::string_view_literals::operator""sv;
+
+    constexpr std::array endings = {
+        "🐈"sv, "😌"sv, "😤"sv, "💅"sv, "🥰"sv, "💖"sv};
+
+    std::random_device rd;
+
+    std::string_view ending1 = endings[rd() % endings.size()];
+    std::string_view ending2;
+    do {
+        ending2 = endings[rd() % endings.size()];
+    } while(ending2 == ending1);
 
     std::string_view sv = contents;
 
@@ -27,7 +41,7 @@ int catify(fs::path const& p) {
         }
 
         file.seekp(end);
-        file << " 🐈";
+        file << ' ' << ending1 << ending2;
         file << sv.substr(end);
         return 0;
     }
