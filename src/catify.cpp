@@ -20,7 +20,7 @@ int catify(fs::path const& p) {
     using std::string_view_literals::operator""sv;
 
     constexpr std::array endings = {
-        "🐈"sv, "😌"sv, "😤"sv, "💅"sv, "🥰"sv, "💖"sv};
+        "🐈"sv, "😌"sv, "💅"sv, "🥰"sv, "💖"sv};
 
     std::random_device rd;
 
