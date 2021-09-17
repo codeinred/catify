@@ -24,3 +24,5 @@ You can also enable it globally by running:
 git config --global core.hooksPath "$HOME/.local/git-hooks"
 ```
 And you're done!
+
+[Catify Example](/catify.png)
