@@ -13,13 +13,10 @@ include("${CMAKE_CURRENT_SOURCE_DIR}/helper.cmake")
 ## Section 2: Project CMake code ##
 ###################################
 
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
-
 # Add library and register compile options
 add_library(${libname} INTERFACE)
 
 target_cpp_20(${libname})
-
 
 target_include_directories(
     ${libname}
@@ -33,7 +30,7 @@ install(
     DESTINATION include
 )
 
-if(PROJECT_IS_TOP_LEVEL)
+if(${CMAKE_PROJECT_NAME} STREQUAL ${project_name})
     find_or_fetch(fmt "https://github.com/fmtlib/fmt.git" master)
 
     add_source_dir(src ${libname} fmt)
