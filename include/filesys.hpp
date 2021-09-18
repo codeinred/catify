@@ -40,7 +40,10 @@ class cfile {
     // will create a new cfile, resulting in f.fileptr being made null. Then,
     // when the assignment occurs, tihs null value will be replaced with the
     // original value.
-    cfile& operator=(cfile f) { std::swap(fileptr, f.fileptr); }
+    cfile& operator=(cfile f) {
+        std::swap(fileptr, f.fileptr);
+        return *this;
+    }
 
     operator FILE*() const { return fileptr; }
 
