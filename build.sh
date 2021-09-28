@@ -18,5 +18,5 @@ for compiler in "${compilers[@]}"; do
 done
 
 # build project in $project_root/build
-cmake --preset="default" -DCMAKE_CXX_COMPILER="${cxx}" "${@}"
-cmake --build --preset="default"
+cmake -B build -DCMAKE_BUILD_TYPE="Release" -DCMAKE_CXX_COMPILER="${cxx}" "${@}"
+cmake --build build
