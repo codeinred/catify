@@ -8,6 +8,8 @@ project(catify CXX)
 set(libname "lib${PROJECT_NAME}")
 
 include("${CMAKE_CURRENT_SOURCE_DIR}/helper.cmake")
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 ###################################
 ## Section 2: Project CMake code ##
 ###################################
@@ -15,7 +17,11 @@ include("${CMAKE_CURRENT_SOURCE_DIR}/helper.cmake")
 # Add library and register compile options
 add_library(${libname} INTERFACE)
 
-target_cpp_20(${libname})
+target_compile_features(
+    ${libname}
+    INTERFACE
+    cxx_std_20
+)
 
 target_include_directories(
     ${libname}
